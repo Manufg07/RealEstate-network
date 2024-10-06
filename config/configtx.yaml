@@ -15,59 +15,62 @@ Organizations:
         Rule: "OR('OrdererMSP.admin')"
     OrdererEndpoints:
       - orderer.example.com:7050
-  - &realestatecorp
-    Name: RealEstateCorpMSP  # Aligned with docker-compose.yaml
-    ID: RealEstateCorpMSP
+
+  - &RealestatecorpOrg
+    Name: realestatecorpMSP
+    ID: realestatecorpMSP
     MSPDir: ../organizations/peerOrganizations/realestatecorp.example.com/msp
     Policies:
       Readers:
         Type: Signature
-        Rule: "OR('RealEstateCorpMSP.admin', 'RealEstateCorpMSP.peer', 'RealEstateCorpMSP.client')"
+        Rule: "OR('realestatecorpMSP.admin', 'realestatecorpMSP.peer', 'realestatecorpMSP.client')"
       Writers:
         Type: Signature
-        Rule: "OR('RealEstateCorpMSP.admin', 'RealEstateCorpMSP.client')"
+        Rule: "OR('realestatecorpMSP.admin', 'realestatecorpMSP.client')"
       Admins:
         Type: Signature
-        Rule: "OR('RealEstateCorpMSP.admin')"
+        Rule: "OR('realestatecorpMSP.admin')"
       Endorsement:
         Type: Signature
-        Rule: "OR('RealEstateCorpMSP.peer')"
-  - &propertytrust
-    Name: PropertyTrustMSP  # Aligned with docker-compose.yaml
-    ID: PropertyTrustMSP
+        Rule: "OR('realestatecorpMSP.peer')"
+
+  - &PropertytrustOrg
+    Name: propertytrustMSP
+    ID: propertytrustMSP
     MSPDir: ../organizations/peerOrganizations/propertytrust.example.com/msp
     Policies:
       Readers:
         Type: Signature
-        Rule: "OR('PropertyTrustMSP.admin', 'PropertyTrustMSP.peer', 'PropertyTrustMSP.client')"
+        Rule: "OR('propertytrustMSP.admin', 'propertytrustMSP.peer', 'propertytrustMSP.client')"
       Writers:
         Type: Signature
-        Rule: "OR('PropertyTrustMSP.admin', 'PropertyTrustMSP.client')"
+        Rule: "OR('propertytrustMSP.admin', 'propertytrustMSP.client')"
       Admins:
         Type: Signature
-        Rule: "OR('PropertyTrustMSP.admin')"
+        Rule: "OR('propertytrustMSP.admin')"
       Endorsement:
         Type: Signature
-        Rule: "OR('PropertyTrustMSP.peer')"
-  - &landregistry
-    Name: LandRegistryMSP  # Aligned with docker-compose.yaml
-    ID: LandRegistryMSP
+        Rule: "OR('propertytrustMSP.peer')"
+
+  - &LandregistryOrg
+    Name: landregistryMSP
+    ID: landregistryMSP
     MSPDir: ../organizations/peerOrganizations/landregistry.example.com/msp
     Policies:
       Readers:
         Type: Signature
-        Rule: "OR('LandRegistryMSP.admin', 'LandRegistryMSP.peer', 'LandRegistryMSP.client')"
+        Rule: "OR('landregistryMSP.admin', 'landregistryMSP.peer', 'landregistryMSP.client')"
       Writers:
         Type: Signature
-        Rule: "OR('LandRegistryMSP.admin', 'LandRegistryMSP.client')"
+        Rule: "OR('landregistryMSP.admin', 'landregistryMSP.client')"
       Admins:
         Type: Signature
-        Rule: "OR('LandRegistryMSP.admin')"
+        Rule: "OR('landregistryMSP.admin')"
       Endorsement:
         Type: Signature
-        Rule: "OR('LandRegistryMSP.peer')"
+        Rule: "OR('landregistryMSP.peer')"
 
-Capabilities:
+Capabilities:  
   Channel: &ChannelCapabilities
     V2_0: true
   Orderer: &OrdererCapabilities
@@ -151,7 +154,7 @@ Profiles:
     Application:
       <<: *ApplicationDefaults
       Organizations:
-        - *realestatecorp
-        - *propertytrust
-        - *landregistry
+        - *RealestatecorpOrg
+        - *PropertytrustOrg
+        - *LandregistryOrg
       Capabilities: *ApplicationCapabilities

@@ -23,7 +23,6 @@ services:
       - ORDERER_GENERAL_LISTENPORT=7050
       - ORDERER_GENERAL_LOCALMSPID=OrdererMSP
       - ORDERER_GENERAL_LOCALMSPDIR=/var/hyperledger/orderer/msp
-      # enabled TLS
       - ORDERER_GENERAL_TLS_ENABLED=true
       - ORDERER_GENERAL_TLS_PRIVATEKEY=/var/hyperledger/orderer/tls/server.key
       - ORDERER_GENERAL_TLS_CERTIFICATE=/var/hyperledger/orderer/tls/server.crt
@@ -74,7 +73,6 @@ services:
       service: hyperledger-fabric
     environment:
       - FABRIC_LOGGING_SPEC=INFO
-      #- FABRIC_LOGGING_SPEC=DEBUG
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric_test
       - CORE_PEER_TLS_ENABLED=true
@@ -82,7 +80,6 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-      # Peer specific variables
       - CORE_PEER_ID=peer0.realestatecorp.example.com
       - CORE_PEER_ADDRESS=peer0.realestatecorp.example.com:7051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:7051
@@ -90,12 +87,10 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:7052
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.realestatecorp.example.com:7051
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.realestatecorp.example.com:7051
-      - CORE_PEER_LOCALMSPID=RealestatecorpMSP
+      - CORE_PEER_LOCALMSPID=realestatecorpMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.realestatecorp.example.com:9444
       - CORE_METRICS_PROVIDER=prometheus
-      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0realestatecorp"}
-      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb0:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
@@ -134,7 +129,6 @@ services:
       service: hyperledger-fabric
     environment:
       - FABRIC_LOGGING_SPEC=INFO
-      #- FABRIC_LOGGING_SPEC=DEBUG
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric_test
       - CORE_PEER_TLS_ENABLED=true
@@ -142,7 +136,6 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-      # Peer specific variables
       - CORE_PEER_ID=peer0.propertytrust.example.com
       - CORE_PEER_ADDRESS=peer0.propertytrust.example.com:9051
       - CORE_PEER_LISTENADDRESS=0.0.0.0:9051
@@ -150,12 +143,10 @@ services:
       - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9052
       - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.propertytrust.example.com:9051
       - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.propertytrust.example.com:9051
-      - CORE_PEER_LOCALMSPID=PropertytrustMSP
+      - CORE_PEER_LOCALMSPID=propertytrustMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
       - CORE_OPERATIONS_LISTENADDRESS=peer0.propertytrust.example.com:9445
       - CORE_METRICS_PROVIDER=prometheus
-      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0propertytrust"}
-      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
       - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
@@ -174,19 +165,6 @@ services:
     networks:
       - test
 
-  couchdb2:
-    container_name: couchdb2
-    image: couchdb:3.3.2
-    labels:
-      service: hyperledger-fabric
-    environment:
-      - COUCHDB_USER=admin
-      - COUCHDB_PASSWORD=adminpw
-    ports:
-      - "9084:5984"
-    networks:
-      - test
-
   peer0.landregistry.example.com:
     container_name: peer0.landregistry.example.com
     image: hyperledger/fabric-peer:latest
@@ -194,7 +172,6 @@ services:
       service: hyperledger-fabric
     environment:
       - FABRIC_LOGGING_SPEC=INFO
-      #- FABRIC_LOGGING_SPEC=DEBUG
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
       - CORE_VM_DOCKER_HOSTCONFIG_NETWORKMODE=fabric_test
       - CORE_PEER_TLS_ENABLED=true
@@ -202,22 +179,19 @@ services:
       - CORE_PEER_TLS_CERT_FILE=/etc/hyperledger/fabric/tls/server.crt
       - CORE_PEER_TLS_KEY_FILE=/etc/hyperledger/fabric/tls/server.key
       - CORE_PEER_TLS_ROOTCERT_FILE=/etc/hyperledger/fabric/tls/ca.crt
-      # Peer specific variables
       - CORE_PEER_ID=peer0.landregistry.example.com
-      - CORE_PEER_ADDRESS=peer0.landregistry.example.com:10051
-      - CORE_PEER_LISTENADDRESS=0.0.0.0:10051
-      - CORE_PEER_CHAINCODEADDRESS=peer0.landregistry.example.com:10052
-      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:10052
-      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.landregistry.example.com:10051
-      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.landregistry.example.com:10051
-      - CORE_PEER_LOCALMSPID=LandregistryMSP
+      - CORE_PEER_ADDRESS=peer0.landregistry.example.com:9052
+      - CORE_PEER_LISTENADDRESS=0.0.0.0:9052
+      - CORE_PEER_CHAINCODEADDRESS=peer0.landregistry.example.com:9053
+      - CORE_PEER_CHAINCODELISTENADDRESS=0.0.0.0:9053
+      - CORE_PEER_GOSSIP_EXTERNALENDPOINT=peer0.landregistry.example.com:9052
+      - CORE_PEER_GOSSIP_BOOTSTRAP=peer0.landregistry.example.com:9052
+      - CORE_PEER_LOCALMSPID=landregistryMSP
       - CORE_PEER_MSPCONFIGPATH=/etc/hyperledger/fabric/msp
-      - CORE_OPERATIONS_LISTENADDRESS=peer0.landregistry.example.com:10445
+      - CORE_OPERATIONS_LISTENADDRESS=peer0.landregistry.example.com:9446
       - CORE_METRICS_PROVIDER=prometheus
-      - CHAINCODE_AS_A_SERVICE_BUILDER_CONFIG={"peername":"peer0landregistry"}
-      - CORE_CHAINCODE_EXECUTETIMEOUT=300s
       - CORE_LEDGER_STATE_STATEDATABASE=CouchDB
-      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb2:5984
+      - CORE_LEDGER_STATE_COUCHDBCONFIG_COUCHDBADDRESS=couchdb1:5984
       - CORE_LEDGER_STATE_COUCHDBCONFIG_USERNAME=admin
       - CORE_LEDGER_STATE_COUCHDBCONFIG_PASSWORD=adminpw
     volumes:
@@ -227,12 +201,12 @@ services:
     working_dir: /root
     command: peer node start
     ports:
-      - 10051:10051
-      - 10445:10445
+      - 9052:9052
+      - 9446:9446
     depends_on:
-      - couchdb2
+      - couchdb1
     networks:
-      - test
+      - test  
 
   cli:
     container_name: cli
@@ -245,7 +219,6 @@ services:
       - GOPATH=/opt/gopath
       - FABRIC_LOGGING_SPEC=INFO
       - CORE_VM_ENDPOINT=unix:///host/var/run/docker.sock
-      #- FABRIC_LOGGING_SPEC=DEBUG
     working_dir: /opt/gopath/src/github.com/hyperledger/fabric/peer
     command: /bin/bash
     volumes:
@@ -255,5 +228,6 @@ services:
       - peer0.realestatecorp.example.com
       - peer0.propertytrust.example.com
       - peer0.landregistry.example.com
+      - orderer.example.com
     networks:
       - test
