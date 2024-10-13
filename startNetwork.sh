@@ -180,3 +180,19 @@ peer lifecycle chaincode commit -o localhost:7050 --ordererTLSHostnameOverride o
 sleep 2
 
 peer lifecycle chaincode querycommitted --channelID $CHANNEL_NAME --name basic --cafile $ORDERER_CA
+
+
+
+#  export FABRIC_CFG_PATH=./peercfg
+#  export CHANNEL_NAME=realestatecorp
+#  export CORE_PEER_LOCALMSPID=realestatecorpMSP
+#  export CORE_PEER_TLS_ENABLED=true
+#  export CORE_PEER_TLS_ROOTCERT_FILE=${PWD}/organizations/peerOrganizations/realestatecorp.example.com/peers/peer0.realestatecorp.example.com/tls/ca.crt
+#  export CORE_PEER_MSPCONFIGPATH=${PWD}/organizations/peerOrganizations/realestatecorp.example.com/users/Admin@realestatecorp.example.com/msp
+#  export CORE_PEER_ADDRESS=localhost:7051
+#  export ORDERER_CA=${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem
+#  export ORG1_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/realestatecorp.example.com/peers/peer0.realestatecorp.example.com/tls/ca.crt
+#  export ORG2_PEER_TLSROOTCERT=${PWD}/organizations/peerOrganizations/propertytrust.example.com/peers/peer0.propertytrust.example.com/tls/ca.crt
+
+#  peer chaincode invoke -o localhost:7050 --ordererTLSHostnameOverride orderer.example.com --tls --cafile "${PWD}/organizations/ordererOrganizations/example.com/orderers/orderer.example.com/msp/tlscacerts/tlsca.example.com-cert.pem" -C realestatecorp -n basic --peerAddresses localhost:7051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/realestatecorp.example.com/peers/peer0.realestatecorp.example.com/tls/ca.crt" --peerAddresses localhost:9051 --tlsRootCertFiles "${PWD}/organizations/peerOrganizations/propertytrust.example.com/peers/peer0.propertytrust.example.com/tls/ca.crt" -c '{"function":"InitLedger","Args":[]}'
+#  peer chaincode query -C realestatecorp -n basic -c '{"function":"ReadAsset","Args":["asset5"]}'
